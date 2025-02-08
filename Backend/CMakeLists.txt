@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-
+include(../cmake/folder_structure.cmake)
 project(Backend)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -18,3 +18,6 @@ target_link_libraries(Backend Engine)
 if(MSVC)
   set(CMAKE_GENERATOR "Visual Studio 17 2022")
 endif()
+
+
+organize_sources(Backend)

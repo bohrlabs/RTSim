@@ -1,0 +1,1 @@
+cmake --preset=VS-x64

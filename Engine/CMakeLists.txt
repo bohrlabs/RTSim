@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.17)
 
+include(../cmake/folder_structure.cmake)
+
 project(Engine)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -23,6 +25,9 @@ add_library(Engine STATIC
 )
 
  target_include_directories(Engine PUBLIC include)
+
+
+ organize_sources(Engine)
 
 ## Generate EngineConfig.cmake
 #file(WRITE ${PROJECT_BINARY_DIR}/EngineConfig.cmake "

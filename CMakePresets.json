@@ -26,22 +26,12 @@
       }
     },
     {
-      "name": "VS-x64-Debug",
+      "name": "VS-x64",
       "description": "Debug build using Visual Studio",
       "generator": "Visual Studio 17 2022",
-      "binaryDir": "${sourceDir}/build/x64-Debug",
+      "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_CXX_STANDARD": "23"
-      }
-    },
-    {
-      "name": "VS-x64-Release",
-      "description": "Debug build using Visual Studio",
-      "generator": "Visual Studio 17 2022",
-      "binaryDir": "${sourceDir}/build/x64-Release",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_CXX_STANDARD": "23"
       }
     }
