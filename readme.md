@@ -18,4 +18,7 @@ cmake --preset x64-Debug
 
 
 ## Architecture
-See [here](docs/architecture.md)
+See [here](docs/architecture.md) 
+
+## Currnt thoughts and status
+See [here](docs/status.md) 
