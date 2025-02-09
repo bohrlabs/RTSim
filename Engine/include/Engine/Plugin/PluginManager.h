@@ -1,22 +1,33 @@
 #pragma once
 #include "Engine/Core.h"
+
 #include "Engine/Services.h"
 #include "Plugin/IPlugin.h"
+#include "PluginLoader.h"
 
-namespace Engine {
-    class PluginManager {
-      public:
-        bool LoadPlugin(const fs::path &pluginPath);
-        void UnloadPlugins();
-        void UpdateAllPlugins(float deltaTime);
+namespace PluginSystem {
 
-        // Getters for plugin information
-        const std::vector<std::string> &GetProvidedPorts() const;
-        const std::vector<std::string> &GetRequiredServices() const;
-
-      private:
-        std::vector<std::unique_ptr<Plugin::IPlugin>>             m_Plugins;
-        std::map<std::string, void *>                             m_Ports;    // Store registered ports
-        std::map<std::string, std::unique_ptr<Plugin::IServices>> m_Services; // Store registered services
+    struct PluginInstance {
+        std::unique_ptr<Plugin::IPlugin> Plugin;
+        fs::path                         CopiedDllPath;
+        PluginLoader::PluginHandle       Handle;
     };
-} // namespace Engine
+
+    class PluginManager {
+      private:
+        PluginLoader                m_Loader;
+        std::vector<PluginInstance> m_Instances;
+        std::mutex                  m_InstanceMutex;
+
+        fs::path CopyPluginToTemp(const fs::path &originalPath);
+
+      public:
+        PluginManager() = default;
+        ~PluginManager();
+
+        void LoadPlugin(const fs::path &pluginPath);
+        void UnloadAllPlugins();
+        void UpdatePlugins(float deltaTime);
+    };
+
+} // namespace PluginSystem
