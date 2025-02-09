@@ -1,6 +1,6 @@
  #pragma once
 
-#include "Engine/IPlugin.h"
+#include "Plugin/IPlugin.h"
 
 class MyFirstPlugin : public Plugin::IPlugin
 {

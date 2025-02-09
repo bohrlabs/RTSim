@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.h"
+#include "PluginCommon.h"
 
 namespace Plugin {
     class IServices {

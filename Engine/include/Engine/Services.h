@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/Core.h"
-#include "Engine/IPlugin.h"
+#include "Plugin/IPlugin.h"
 
 class Services: public Plugin::IServices {
   public:

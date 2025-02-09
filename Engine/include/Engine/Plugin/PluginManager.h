@@ -1,7 +1,8 @@
 #pragma once
 #include "Engine/Core.h"
-#include "IPlugin.h"
-#include "Services.h"
+#include "Engine/Services.h"
+#include "Plugin/IPlugin.h"
+
 namespace Engine {
     class PluginManager {
       public:

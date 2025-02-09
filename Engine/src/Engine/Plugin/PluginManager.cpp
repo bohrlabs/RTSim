@@ -1,5 +1,5 @@
 
-#include "Engine/PluginManager.h"
+#include "Engine/Plugin/PluginManager.h"
 #include "Engine/PlatformAbstraction.h"
 namespace Engine {
 
