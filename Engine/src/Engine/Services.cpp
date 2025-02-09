@@ -1,18 +1,17 @@
 #include "Engine/Services.h"
+namespace PluginSystem {
 
-void Services::RegisterService(const std::string &name, void *service) {
-}
+    Plugin::IProperty *Services::GetProperty(const std::string &name) {
+        return nullptr;
+    }
 
-void *Services::GetService(const std::string &name) {
-    return nullptr;
-}
+    void Services::InternalCreateInputPort(const std::string &name, void **ppData, size_t dataSize) {
+    }
 
-void Services::CreatePort(const std::string &name, void *port) {
-}
+    void Services::InternalCreateOutputPort(const std::string &name, void *pData, size_t dataSize) {
+    }
 
-void *Services::GetPort(const std::string &name) {
-    return nullptr;
-}
+    void Services::InternalRegisterProperty(const std::string &name, void *pData, size_t dataSize, size_t typeHash) {
+    }
 
-void Services::CreateConfigProperty(const std::string &name, void *configProperty) {
-}
+} // namespace PluginSystem

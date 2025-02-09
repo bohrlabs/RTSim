@@ -2,7 +2,7 @@
 #include "Engine/Plugin/PluginManager.h"
 #include "Engine/PlatformAbstraction.h"
 #include "Engine/Utils/Utils.h"
-
+#include "Engine/FrameworkServices.h"
 
 namespace PluginSystem {
 
@@ -36,7 +36,7 @@ namespace PluginSystem {
         instance.CopiedDllPath = CopyPluginToTemp(pluginPath);
         instance.Handle        = m_Loader.Load(instance.CopiedDllPath);
 
-        auto createFunc = m_Loader.GetSymbol<CreatePluginFunction>(instance.Handle, "CreatePlugin");
+        auto createFunc = m_Loader.GetSymbol<Plugin::CreatePluginFunction>(instance.Handle, "CreatePlugin");
         if (!createFunc) {
             throw std::runtime_error("Plugin is missing CreatePlugin symbol: " + pluginPath.string());
         }
@@ -64,6 +64,37 @@ namespace PluginSystem {
             if (instance.Plugin) {
                 instance.Plugin->Process(deltaTime);
             }
+        }
+    }
+
+    void PluginManager::LoadConfig(const std::filesystem::path &configPath) {
+        m_ConfigManager.LoadFromFile(configPath);
+
+        for (const auto &pluginConfig : m_ConfigManager.GetPlugins()) {
+            // Load plugin instance
+            auto &instance         = m_Instances.emplace_back();
+            instance.CopiedDllPath = CopyPluginToTemp(pluginConfig.Path);
+            instance.Handle        = m_Loader.Load(instance.CopiedDllPath);
+
+            // Initialize plugin
+            auto createFunc = m_Loader.GetSymbol<Plugin::CreatePluginFunction>(instance.Handle, "CreatePlugin");
+            instance.Plugin.reset(createFunc());
+
+            // Configure ports and properties
+            FrameworkServices services;
+            for (const auto &port : pluginConfig.InputPorts) {
+                services.CreateInputPort(port);
+            }
+            for (const auto &port : pluginConfig.OutputPorts) {
+                services.CreateOutputPort(port);
+            }
+            for (const auto &[name, value] : pluginConfig.Properties) {
+                if (auto prop = services.GetProperty(name)) {
+                    prop->Deserialize(value);
+                }
+            }
+
+            instance.Plugin->Initialize(services);
         }
     }
 
