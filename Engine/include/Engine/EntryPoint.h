@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Engine/Core.h"    
 #include "Engine/Application.h"
-
-
+#include "Engine/Core.h"
 
 //extern std::unique_ptr<Engine::Application> Engine::CreateApplication(Engine::ApplicationCommandLineArgs args);
 //#include "Engine/ThreadMonitor.h"
@@ -29,7 +27,6 @@
 //    }
 //}
 
-
 //int main(int argc, char** argv) {
 //    srand(time(nullptr));
 //    ThreadMonitor monitor;
@@ -41,12 +38,11 @@
 //    t2.join();
 //}
 
-
 #if 1
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     //Engine::Log::Init();
 
-    Engine::ApplicationCommandLineArgs specification = { argc, argv };
+    Engine::ApplicationCommandLineArgs specification = {argc, argv};
 
     Engine::Application;
 

@@ -1,18 +1,16 @@
 // ThreadMonitor.cpp
 #include "Engine/ThreadMonitor.h"
 
-#include <mutex>
-#include <map>
 #include <chrono>
-#include <string>
 #include <iostream>
+#include <map>
+#include <mutex>
+#include <string>
 #include <thread>
-
-
 
 namespace Engine {
 
-    void ThreadMonitor::RenderGraph(const std::string& name, const std::vector<double>& data) {
+    void ThreadMonitor::RenderGraph(const std::string &name, const std::vector<double> &data) {
 
         if (data.empty()) return;
 
@@ -39,11 +37,11 @@ namespace Engine {
             std::lock_guard<std::mutex> lock(m_DataMutex);
 #ifdef WIN32
             //system("cls");  // Windows: use "cls" on Windows
-            std::cout << "\033[H";  // ANSI escape code to reset cursor position
+            std::cout << "\033[H"; // ANSI escape code to reset cursor position
 #else
-            system("clear");  // Windows: use "clear" on Linux
+            system("clear"); // Windows: use "clear" on Linux
 #endif
-            for (const auto& [name, stats] : m_ThreadData) {
+            for (const auto &[name, stats] : m_ThreadData) {
                 RenderGraph(name, stats.CycleTimes);
             }
         }
@@ -59,9 +57,9 @@ namespace Engine {
         std::thread(&ThreadMonitor::DisplayLoop, this).detach();
     }
 
-    void ThreadMonitor::LogCycle(const std::string& thread_name, double cycle_time) {
+    void ThreadMonitor::LogCycle(const std::string &thread_name, double cycle_time) {
         std::lock_guard<std::mutex> lock(m_DataMutex);
-        ThreadStats& stats = m_ThreadData[thread_name];
+        ThreadStats                &stats = m_ThreadData[thread_name];
 
         if (stats.CycleTimes.size() >= m_MaxHistory) {
             stats.CycleTimes.erase(stats.CycleTimes.begin());

@@ -1,6 +1,5 @@
 #include "Engine/Core.h"
 #include <stdio.h>
-void TestFunction()
-{
+void TestFunction() {
     printf("testfunciton \n");
 }

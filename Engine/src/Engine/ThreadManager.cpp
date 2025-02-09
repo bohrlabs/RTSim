@@ -2,7 +2,8 @@
 #include <iostream>
 
 namespace Engine {
-    ThreadManager::ThreadManager(size_t numThreads, ThreadMonitor& monitor) : m_Monitor(monitor) {
+    ThreadManager::ThreadManager(size_t numThreads, ThreadMonitor &monitor)
+        : m_Monitor(monitor) {
         for (size_t i = 0; i < numThreads; ++i) {
             m_ThreadPool.emplace_back(&ThreadManager::WorkerThread, this);
         }
@@ -36,7 +37,7 @@ namespace Engine {
         m_TaskNotifier.notify_one();
     }
 
-    void ThreadManager::CreateThread(const std::string& name, std::function<void()> func) {
+    void ThreadManager::CreateThread(const std::string &name, std::function<void()> func) {
         std::lock_guard<std::mutex> lock(m_NamedThreadMutex);
 
         if (m_NamedThreads.contains(name)) {
@@ -48,19 +49,18 @@ namespace Engine {
             while (not m_StopThreads) {
                 auto start = std::chrono::high_resolution_clock::now();
                 func();
-                auto end = std::chrono::high_resolution_clock::now();
+                auto  end            = std::chrono::high_resolution_clock::now();
                 float frameTimeMilli = std::chrono::duration<float, std::milli>(end - start).count();
                 m_Monitor.LogCycle(name, frameTimeMilli);
             }
-
-            });
+        });
     }
 
     void ThreadManager::Shutdown() {
         m_StopThreads = true;
         m_TaskNotifier.notify_all();
 
-        for (auto& thread : m_ThreadPool) {
+        for (auto &thread : m_ThreadPool) {
             if (thread.joinable()) thread.join();
         }
 

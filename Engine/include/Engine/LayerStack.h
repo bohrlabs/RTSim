@@ -5,10 +5,12 @@
 
 namespace Engine {
     class LayerStack {
-    private:
+      private:
         std::vector<std::unique_ptr<ILayer>> m_Layers;
+
         uint32_t m_LayerInsertIndex = 0;
-    public:
+
+      public:
         LayerStack() = default;
         ~LayerStack();
 
@@ -62,7 +64,9 @@ namespace Engine {
          *
          * @return An iterator to the beginning of the layer stack.
          */
-        std::vector<std::unique_ptr<ILayer>>::iterator begin() { return m_Layers.begin(); }
+        std::vector<std::unique_ptr<ILayer>>::iterator begin() {
+            return m_Layers.begin();
+        }
 
         /**
          * @brief Returns an iterator to the end of the layer stack.
@@ -72,6 +76,8 @@ namespace Engine {
          *
          * @return An iterator to the end of the layer stack.
          */
-        std::vector<std::unique_ptr<ILayer>>::iterator end() { return m_Layers.end(); }
+        std::vector<std::unique_ptr<ILayer>>::iterator end() {
+            return m_Layers.end();
+        }
     };
 } // namespace Engine

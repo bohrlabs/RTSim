@@ -1,7 +1,6 @@
 #include "LayerBackend.h"
 
-namespace RTSim
-{
+namespace RTSim {
 
     void LayerBackend::OnAttach() {
     }
@@ -16,4 +15,4 @@ namespace RTSim
     void LayerBackend::OnEvent() {
     }
 
-}
+} // namespace RTSim

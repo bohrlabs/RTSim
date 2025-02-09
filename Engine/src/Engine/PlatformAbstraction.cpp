@@ -1,14 +1,14 @@
 #include "Engine/PlatformAbstraction.h"
 
 #ifdef _WIN32
-#include <windows.h>
+#    include <windows.h>
 
-class WindowsLibrary : public PlatformLibrary {
-private:
+class WindowsLibrary: public PlatformLibrary {
+  private:
     HMODULE m_libraryHandle = nullptr;
 
-public:
-    bool Load(const std::string& path) override {
+  public:
+    bool Load(const std::string &path) override {
         m_libraryHandle = LoadLibraryA(path.c_str());
         if (!m_libraryHandle) {
             std::cerr << "Failed to load library: " << path << std::endl;
@@ -17,9 +17,9 @@ public:
         return true;
     }
 
-    void* GetFunction(const std::string& functionName) override {
+    void *GetFunction(const std::string &functionName) override {
         if (!m_libraryHandle) return nullptr;
-        return reinterpret_cast<void*>(GetProcAddress(m_libraryHandle, functionName.c_str()));
+        return reinterpret_cast<void *>(GetProcAddress(m_libraryHandle, functionName.c_str()));
     }
 
     void Unload() override {
@@ -35,23 +35,24 @@ public:
 };
 
 #else
-#include <dlfcn.h>
+#    include <dlfcn.h>
 
-class LinuxLibrary : public PlatformLibrary {
-private:
-    void* m_libraryHandle = nullptr;
+class LinuxLibrary: public PlatformLibrary {
+  private:
+    void *m_libraryHandle = nullptr;
 
-public:
-    bool Load(const std::string& path) override {
+  public:
+    bool Load(const std::string &path) override {
         m_libraryHandle = dlopen(path.c_str(), RTLD_LAZY);
         if (!m_libraryHandle) {
-            std::cerr << "Failed to load library: " << path << "\n" << dlerror() << std::endl;
+            std::cerr << "Failed to load library: " << path << "\n"
+                      << dlerror() << std::endl;
             return false;
         }
         return true;
     }
 
-    void* GetFunction(const std::string& functionName) override {
+    void *GetFunction(const std::string &functionName) override {
         if (!m_libraryHandle) return nullptr;
         return dlsym(m_libraryHandle, functionName.c_str());
     }

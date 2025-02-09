@@ -1,18 +1,15 @@
 #include "Engine/Application.h"
 #include <chrono>
 
-
-
-
-
 namespace Engine {
-    Application::Application(const ApplicationSpecification& specs)
+    Application::Application(const ApplicationSpecification &specs)
         : m_ThreadManager(std::thread::hardware_concurrency(), m_ThreadMonitor) {
         m_LayerStack = std::make_unique<LayerStack>();
-
     }
 
-    Application::~Application() { Shutdown(); }
+    Application::~Application() {
+        Shutdown();
+    }
 
     void Application::Run() {
 
@@ -21,9 +18,9 @@ namespace Engine {
             auto now = std::chrono::high_resolution_clock::now();
 
             float frameTimeMilli = std::chrono::duration<float, std::milli>(now - m_LastFrameTime).count();
-            m_LastFrameTime = now;
+            m_LastFrameTime      = now;
             m_ThreadMonitor.LogCycle("Main Thread", frameTimeMilli);
-            for (auto& layer : *m_LayerStack) {
+            for (auto &layer : *m_LayerStack) {
                 layer->OnUpdate(frameTimeMilli);
             }
         }
@@ -38,8 +35,6 @@ namespace Engine {
         m_LayerStack->PushLayer(std::move(layer));
     }
 
-    std::unique_ptr<Application> Application::m_Instance = nullptr;  // Define it
-
-
+    std::unique_ptr<Application> Application::m_Instance = nullptr; // Define it
 
 } // namespace Engine

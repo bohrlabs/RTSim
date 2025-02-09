@@ -1,10 +1,9 @@
 #pragma once
 
 #include "Engine/ILayer.h"
-namespace RTSim
-{
+namespace RTSim {
 
-    class LayerBackend : public Engine::ILayer {
+    class LayerBackend: public Engine::ILayer {
         // Inherited via ILayer
         void OnAttach() override;
         void OnDetach() override;
@@ -12,5 +11,4 @@ namespace RTSim
         void OnEvent() override;
     };
 
-
-}
+} // namespace RTSim

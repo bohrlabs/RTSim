@@ -20,7 +20,7 @@ BraceWrapping:
 IndentCaseLabels: false
 AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 IndentAccessModifiers: false
-NamespaceIndentation: None
+NamespaceIndentation: All
 CommentPragmas: '^'
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortFunctionsOnASingleLine: None
